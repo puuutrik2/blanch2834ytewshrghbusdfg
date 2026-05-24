@@ -8,7 +8,6 @@ const DISCORD_REDIRECT_URI = "https://blanch.monster/";
 const DISCORD_API_BASE = "https://discord.com/api/v10";
 const DISCORD_PROFILE_STORAGE_KEY = "blanchDiscordProfile";
 const DISCORD_STATE_STORAGE_KEY = "blanchDiscordState";
-const discordEntryButton = document.querySelector("#discordEntryButton");
 const discordProfileButton = document.querySelector("#discordProfileButton");
 const discordProfileMenu = document.querySelector("#discordProfileMenu");
 const discordLogoutButton = document.querySelector("#discordLogoutButton");
@@ -279,7 +278,6 @@ function handleAlbumLightboxKeys(event) {
 }
 
 function initDiscordGate() {
-  discordEntryButton?.addEventListener("click", startDiscordOAuth);
   discordProfileButton?.addEventListener("click", toggleDiscordProfileMenu);
   discordLogoutButton?.addEventListener("click", logoutDiscordProfile);
   document.addEventListener("click", closeDiscordProfileMenuOnOutsideClick);
@@ -293,7 +291,7 @@ async function hydrateDiscordProfile() {
   if (authPayload.error) {
     clearDiscordAuthHash();
     clearDiscordState();
-    lockDiscordGate();
+    resetDiscordProfile();
     showToast("Вход через Discord отменен или не прошел.", true);
     return;
   }
@@ -302,7 +300,7 @@ async function hydrateDiscordProfile() {
     if (!isValidDiscordState(authPayload.state)) {
       clearDiscordAuthHash();
       clearDiscordState();
-      lockDiscordGate();
+      resetDiscordProfile();
       showToast("Discord не подтвердил состояние входа. Попробуйте еще раз.", true);
       return;
     }
@@ -313,7 +311,7 @@ async function hydrateDiscordProfile() {
       unlockDiscordGate(profile);
       showToast("Discord профиль подключен.");
     } catch (error) {
-      lockDiscordGate();
+      resetDiscordProfile();
       showToast("Не удалось получить профиль Discord.", true);
       console.error(error);
     } finally {
@@ -329,7 +327,7 @@ async function hydrateDiscordProfile() {
     return;
   }
 
-  lockDiscordGate();
+  resetDiscordProfile();
 }
 
 function startDiscordOAuth() {
@@ -481,18 +479,18 @@ function readStoredDiscordProfile() {
   }
 }
 
-function lockDiscordGate() {
-  discordUser = null;
-  closeDiscordProfileMenu();
-  body.classList.add("auth-locked");
-  renderDiscordProfile(null);
-}
-
 function unlockDiscordGate(profile) {
   discordUser = profile;
   renderDiscordProfile(profile);
   body.classList.remove("auth-locked");
   window.requestAnimationFrame(() => window.dispatchEvent(new Event("resize")));
+}
+
+function resetDiscordProfile() {
+  discordUser = null;
+  closeDiscordProfileMenu();
+  body.classList.remove("auth-locked");
+  renderDiscordProfile(null);
 }
 
 function renderDiscordProfile(profile) {
@@ -520,16 +518,9 @@ function toggleDiscordProfileMenu(event) {
     }
   }
 
-  if (!discordUser && body.classList.contains("auth-locked")) {
+  if (!discordUser) {
     startDiscordOAuth();
     return;
-  }
-
-  if (!discordUser) {
-    discordUser = {
-      displayName: headerProfileName?.textContent?.trim() || "Discord",
-      avatarUrl: headerProfileAvatar?.getAttribute("src") || defaultDiscordAvatar,
-    };
   }
 
   const isOpen = discordProfileMenu && !discordProfileMenu.hidden;
@@ -566,7 +557,7 @@ function logoutDiscordProfile(event) {
     // The visible session should still be reset even if storage is blocked.
   }
   closeDiscordProfileMenu();
-  lockDiscordGate();
+  resetDiscordProfile();
   showToast("Вы вышли из профиля.");
 }
 
