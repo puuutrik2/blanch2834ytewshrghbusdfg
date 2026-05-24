@@ -4,11 +4,14 @@ const rainButton = document.querySelector(".rain-toggle");
 const rainVolumeSlider = document.querySelector(".rain-volume__slider");
 // Paste your Discord application Client ID here and add this page URL to OAuth2 Redirects.
 const DISCORD_CLIENT_ID = "1507442769839525898";
+const DISCORD_REDIRECT_URI = "https://blanch.monster/";
 const DISCORD_API_BASE = "https://discord.com/api/v10";
 const DISCORD_PROFILE_STORAGE_KEY = "blanchDiscordProfile";
 const DISCORD_STATE_STORAGE_KEY = "blanchDiscordState";
 const discordEntryButton = document.querySelector("#discordEntryButton");
 const discordProfileButton = document.querySelector("#discordProfileButton");
+const discordProfileMenu = document.querySelector("#discordProfileMenu");
+const discordLogoutButton = document.querySelector("#discordLogoutButton");
 const headerProfileAvatar = document.querySelector(".header-profile__avatar");
 const headerProfileName = document.querySelector(".header-profile__name");
 const defaultDiscordAvatar = headerProfileAvatar?.getAttribute("src") || "assets/member-ghost.png";
@@ -189,7 +192,10 @@ function initMemberCards() {
 
 function initDiscordGate() {
   discordEntryButton?.addEventListener("click", startDiscordOAuth);
-  discordProfileButton?.addEventListener("click", startDiscordOAuth);
+  discordProfileButton?.addEventListener("click", toggleDiscordProfileMenu);
+  discordLogoutButton?.addEventListener("click", logoutDiscordProfile);
+  document.addEventListener("click", closeDiscordProfileMenuOnOutsideClick);
+  document.addEventListener("keydown", closeDiscordProfileMenuOnEscape);
   hydrateDiscordProfile();
 }
 
@@ -239,6 +245,7 @@ async function hydrateDiscordProfile() {
 }
 
 function startDiscordOAuth() {
+  closeDiscordProfileMenu();
   const clientId = DISCORD_CLIENT_ID.trim();
   const redirectUri = getDiscordRedirectUri();
 
@@ -272,6 +279,7 @@ function startDiscordOAuth() {
 }
 
 function getDiscordRedirectUri() {
+  if (DISCORD_REDIRECT_URI) return DISCORD_REDIRECT_URI;
   if (!window.location.origin || window.location.origin === "null") return "";
   return `${window.location.origin}${window.location.pathname}`;
 }
@@ -387,6 +395,7 @@ function readStoredDiscordProfile() {
 
 function lockDiscordGate() {
   discordUser = null;
+  closeDiscordProfileMenu();
   body.classList.add("auth-locked");
   renderDiscordProfile(null);
 }
@@ -409,8 +418,53 @@ function renderDiscordProfile(profile) {
   }
   discordProfileButton?.setAttribute(
     "aria-label",
-    profile ? `Discord профиль ${displayName}. Нажмите, чтобы войти заново` : "Войти через Discord"
+    profile ? `Discord профиль ${displayName}. Открыть меню профиля` : "Войти через Discord"
   );
+}
+
+function toggleDiscordProfileMenu(event) {
+  event?.stopPropagation();
+  if (!discordUser) {
+    startDiscordOAuth();
+    return;
+  }
+
+  const isOpen = discordProfileMenu && !discordProfileMenu.hidden;
+  setDiscordProfileMenuOpen(!isOpen);
+}
+
+function setDiscordProfileMenuOpen(isOpen) {
+  if (!discordProfileMenu) return;
+  discordProfileMenu.hidden = !isOpen;
+  discordProfileButton?.setAttribute("aria-expanded", String(isOpen));
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeDiscordProfileMenu() {
+  setDiscordProfileMenuOpen(false);
+}
+
+function closeDiscordProfileMenuOnOutsideClick(event) {
+  if (!discordProfileMenu || discordProfileMenu.hidden) return;
+  if (event.target.closest(".profile-shell")) return;
+  closeDiscordProfileMenu();
+}
+
+function closeDiscordProfileMenuOnEscape(event) {
+  if (event.key !== "Escape") return;
+  closeDiscordProfileMenu();
+}
+
+function logoutDiscordProfile(event) {
+  event?.stopPropagation();
+  try {
+    sessionStorage.removeItem(DISCORD_PROFILE_STORAGE_KEY);
+  } catch {
+    // The visible session should still be reset even if storage is blocked.
+  }
+  closeDiscordProfileMenu();
+  lockDiscordGate();
+  showToast("Вы вышли из профиля.");
 }
 
 function initHeroThree() {

@@ -67,10 +67,18 @@
             <input class="rain-volume__slider" type="range" min="0" max="100" value="55" aria-label="Громкость дождя" />
           </label>
         </div>
-        <button class="header-profile" id="discordProfileButton" type="button" aria-label="Войти через Discord">
-          <img class="header-profile__avatar" src="assets/member-ghost.png" alt="Discord avatar" />
-          <span class="header-profile__name">Войти через Discord</span>
-        </button>
+        <div class="profile-shell">
+          <button class="header-profile" id="discordProfileButton" type="button" aria-label="Войти через Discord" aria-expanded="false">
+            <img class="header-profile__avatar" src="assets/member-ghost.png" alt="Discord avatar" />
+            <span class="header-profile__name">Войти через Discord</span>
+          </button>
+          <div class="profile-menu" id="discordProfileMenu" hidden>
+            <button class="profile-menu__item" id="discordLogoutButton" type="button">
+              <i data-lucide="log-out"></i>
+              <span>Выйти из профиля</span>
+            </button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -217,19 +225,19 @@
 
         <div class="members-grid">
           <article class="member-card reveal">
-            <img src="assets/member-vince.png" alt="Vince BLANCH" loading="lazy" />
+            <img src="assets/member-vince.png" alt="Viki BLANCH" loading="lazy" />
             <div class="member-card__meta">
               <span>Boss</span>
-              <h3>Vince BLANCH</h3>
+              <h3>Viki BLANCH</h3>
               <p>Глава семьи</p>
             </div>
           </article>
 
           <article class="member-card reveal">
-            <img src="assets/member-nero.png" alt="Nero BLANCH" loading="lazy" />
+            <img src="assets/member-nero.png" alt="Alexis Blanchez" loading="lazy" />
             <div class="member-card__meta">
               <span>Deputy</span>
-              <h3>Nero BLANCH</h3>
+              <h3>Alexis Blanchez</h3>
               <p>Правая рука</p>
             </div>
           </article>

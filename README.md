@@ -9,9 +9,15 @@
 
 ```js
 const DISCORD_CLIENT_ID = "YOUR_CLIENT_ID";
+const DISCORD_REDIRECT_URI = "https://blanch.monster/";
 ```
 
-3. Добавьте URL сайта в OAuth2 Redirects.
+3. Добавьте этот точный URL в OAuth2 Redirects:
+
+```txt
+https://blanch.monster/
+```
+
 4. Откройте сайт через `http://` или `https://`, потому что Discord OAuth не работает через `file://`.
 
 ## Локальный запуск

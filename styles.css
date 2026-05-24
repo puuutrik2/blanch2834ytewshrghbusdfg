@@ -434,6 +434,10 @@ body.auth-locked .discord-entry {
   gap: 10px;
 }
 
+.profile-shell {
+  position: relative;
+}
+
 .rain-control {
   display: flex;
   align-items: center;
@@ -471,6 +475,73 @@ body.auth-locked .discord-entry {
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 18px rgba(255, 24, 56, 0.24);
+}
+
+.profile-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 130;
+  min-width: 210px;
+  padding: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 24, 56, 0.18), transparent 7rem),
+    rgba(8, 9, 11, 0.9);
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.48),
+    0 0 24px rgba(255, 24, 56, 0.12);
+  backdrop-filter: blur(18px);
+  transform-origin: top right;
+  animation: profile-menu-in 0.16s ease-out;
+}
+
+.profile-menu[hidden] {
+  display: none;
+}
+
+.profile-menu::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 20px;
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(8, 9, 11, 0.92);
+  transform: rotate(45deg);
+}
+
+.profile-menu__item {
+  position: relative;
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text);
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.profile-menu__item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--red);
+}
+
+.profile-menu__item:hover {
+  border-color: rgba(255, 24, 56, 0.35);
+  background: rgba(255, 24, 56, 0.12);
+  color: #fff;
 }
 
 .rain-volume {
@@ -1410,6 +1481,18 @@ body.auth-locked .discord-entry {
   50% {
     opacity: 1;
     transform: scale(1.08);
+  }
+}
+
+@keyframes profile-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
