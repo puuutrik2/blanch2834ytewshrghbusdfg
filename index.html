@@ -16,10 +16,10 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&family=Russo+One&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260524-2" />
+    <link rel="stylesheet" href="styles.css?v=20260524-4" />
     <script src="vendor/lucide.min.js" defer></script>
     <script src="vendor/three.min.js" defer></script>
-    <script src="script.js?v=20260524-2" defer></script>
+    <script src="script.js?v=20260524-4" defer></script>
   </head>
   <body class="auth-locked">
     <div class="loader" aria-label="Загрузка сайта">
@@ -94,6 +94,10 @@
           <h1 class="hero__title reveal">BLANCH</h1>
           <p class="hero__slogan reveal">Не каждый достоин носить имя BLANCH</p>
           <div class="hero__actions reveal">
+            <a class="primary-button" href="https://discord.gg/blanchfamq" target="_blank" rel="noopener noreferrer">
+              <i data-lucide="send"></i>
+              <span>Подать заявку</span>
+            </a>
             <a class="secondary-button" href="#gallery">
               <span>Смотреть галерею</span>
             </a>
@@ -199,19 +203,19 @@
         </div>
 
         <div class="album-grid">
-          <figure class="album-slot reveal">
+          <figure class="album-slot reveal" role="button" tabindex="0" data-album-index="0">
             <img src="assets/gallery-convoy.png" alt="Фото 01 BLANCH" loading="lazy" />
             <figcaption>Фото 01</figcaption>
           </figure>
-          <figure class="album-slot reveal">
+          <figure class="album-slot reveal" role="button" tabindex="0" data-album-index="1">
             <img src="assets/gallery-garage.png" alt="Фото 02 BLANCH" loading="lazy" />
             <figcaption>Фото 02</figcaption>
           </figure>
-          <figure class="album-slot reveal">
+          <figure class="album-slot reveal" role="button" tabindex="0" data-album-index="2">
             <img src="assets/gallery-penthouse.png" alt="Фото 03 BLANCH" loading="lazy" />
             <figcaption>Фото 03</figcaption>
           </figure>
-          <figure class="album-slot reveal">
+          <figure class="album-slot reveal" role="button" tabindex="0" data-album-index="3">
             <img src="assets/gallery-redline.png" alt="Фото 04 BLANCH" loading="lazy" />
             <figcaption>Фото 04</figcaption>
           </figure>
@@ -230,7 +234,6 @@
             <div class="member-card__meta">
               <span>CEO</span>
               <h3>Viki BLANCH</h3>
-              <p>Глава семьи</p>
             </div>
           </article>
 
@@ -239,16 +242,14 @@
             <div class="member-card__meta">
               <span>Attorney</span>
               <h3>Alexis Blanch</h3>
-              <p>Правая рука</p>
             </div>
           </article>
 
           <article class="member-card reveal">
-            <img src="assets/member-ghost.png" alt="Flaka Blanch" loading="lazy" />
+            <img src="assets/member-flaka.png" alt="Flaka Blanch" loading="lazy" />
             <div class="member-card__meta">
               <span>Attorney</span>
               <h3>Flaka Blanch</h3>
-              <p>Куратор безопасности</p>
             </div>
           </article>
 
@@ -257,7 +258,6 @@
             <div class="member-card__meta">
               <span>Attorney</span>
               <h3>Ember Blanch</h3>
-              <p>Дипломат и рекрутер</p>
             </div>
           </article>
         </div>
@@ -298,8 +298,27 @@
 
     <footer class="footer">
       <span>BLANCH Family</span>
-      <span>GTA 5 RP private aesthetic</span>
+      <span>MAW Apex Blanch</span>
     </footer>
+
+    <div class="album-lightbox" id="albumLightbox" role="dialog" aria-modal="true" aria-label="Фотоальбом BLANCH" hidden>
+      <button class="album-lightbox__close" id="albumLightboxClose" type="button" aria-label="Закрыть фото">
+        <i data-lucide="x"></i>
+      </button>
+      <button class="album-lightbox__nav album-lightbox__nav--prev" id="albumLightboxPrev" type="button" aria-label="Предыдущее фото">
+        <i data-lucide="chevron-left"></i>
+      </button>
+      <figure class="album-lightbox__figure">
+        <img id="albumLightboxImage" src="assets/gallery-convoy.png" alt="Фото 01 BLANCH" />
+        <figcaption>
+          <span id="albumLightboxCaption">Фото 01</span>
+          <strong id="albumLightboxCounter">01 / 04</strong>
+        </figcaption>
+      </figure>
+      <button class="album-lightbox__nav album-lightbox__nav--next" id="albumLightboxNext" type="button" aria-label="Следующее фото">
+        <i data-lucide="chevron-right"></i>
+      </button>
+    </div>
 
     <div class="toast" role="status" aria-live="polite"></div>
   </body>

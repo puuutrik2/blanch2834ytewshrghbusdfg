@@ -14,8 +14,16 @@ const discordProfileMenu = document.querySelector("#discordProfileMenu");
 const discordLogoutButton = document.querySelector("#discordLogoutButton");
 const headerProfileAvatar = document.querySelector(".header-profile__avatar");
 const headerProfileName = document.querySelector(".header-profile__name");
+const albumLightbox = document.querySelector("#albumLightbox");
+const albumLightboxImage = document.querySelector("#albumLightboxImage");
+const albumLightboxCaption = document.querySelector("#albumLightboxCaption");
+const albumLightboxCounter = document.querySelector("#albumLightboxCounter");
+const albumLightboxClose = document.querySelector("#albumLightboxClose");
+const albumLightboxPrev = document.querySelector("#albumLightboxPrev");
+const albumLightboxNext = document.querySelector("#albumLightboxNext");
 const defaultDiscordAvatar = headerProfileAvatar?.getAttribute("src") || "assets/member-ghost.png";
 let discordUser = null;
+let activeAlbumIndex = 0;
 
 window.addEventListener("load", () => {
   window.setTimeout(() => body.classList.add("is-loaded"), 650);
@@ -29,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initRainLayer();
   initMemberCards();
   initDiscordGate();
+  initAlbumLightbox();
 });
 
 const revealItems = document.querySelectorAll(".reveal");
@@ -161,7 +170,7 @@ function renderCursorRing() {
 
 renderCursorRing();
 
-document.querySelectorAll("a, button, input, textarea, .member-card").forEach((element) => {
+document.querySelectorAll("a, button, input, textarea, .member-card, .album-slot").forEach((element) => {
   element.addEventListener("pointerenter", () => cursorRing?.classList.add("is-hovering"));
   element.addEventListener("pointerleave", () => cursorRing?.classList.remove("is-hovering"));
 });
@@ -188,6 +197,85 @@ function initMemberCards() {
       card.style.transform = "";
     });
   });
+}
+
+function getAlbumItems() {
+  return Array.from(document.querySelectorAll(".album-slot")).map((slot) => {
+    const image = slot.querySelector("img");
+    const caption = slot.querySelector("figcaption")?.textContent?.trim() || image?.alt || "";
+    return {
+      slot,
+      src: image?.getAttribute("src") || "",
+      alt: image?.getAttribute("alt") || caption,
+      caption,
+    };
+  });
+}
+
+function initAlbumLightbox() {
+  const items = getAlbumItems();
+  if (!albumLightbox || !items.length) return;
+
+  items.forEach((item, index) => {
+    item.slot.addEventListener("click", () => openAlbumLightbox(index));
+    item.slot.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      openAlbumLightbox(index);
+    });
+  });
+
+  albumLightboxClose?.addEventListener("click", closeAlbumLightbox);
+  albumLightboxPrev?.addEventListener("click", () => moveAlbumLightbox(-1));
+  albumLightboxNext?.addEventListener("click", () => moveAlbumLightbox(1));
+  albumLightbox.addEventListener("click", (event) => {
+    if (event.target === albumLightbox) closeAlbumLightbox();
+  });
+  document.addEventListener("keydown", handleAlbumLightboxKeys);
+}
+
+function openAlbumLightbox(index) {
+  activeAlbumIndex = index;
+  renderAlbumLightbox();
+  albumLightbox.hidden = false;
+  body.classList.add("lightbox-open");
+  if (window.lucide) window.lucide.createIcons();
+  albumLightboxClose?.focus();
+}
+
+function closeAlbumLightbox() {
+  if (!albumLightbox || albumLightbox.hidden) return;
+  albumLightbox.hidden = true;
+  body.classList.remove("lightbox-open");
+}
+
+function moveAlbumLightbox(direction) {
+  const items = getAlbumItems();
+  if (!items.length) return;
+  activeAlbumIndex = (activeAlbumIndex + direction + items.length) % items.length;
+  renderAlbumLightbox();
+}
+
+function renderAlbumLightbox() {
+  const items = getAlbumItems();
+  const item = items[activeAlbumIndex];
+  if (!item) return;
+
+  if (albumLightboxImage) {
+    albumLightboxImage.src = item.src;
+    albumLightboxImage.alt = item.alt;
+  }
+  if (albumLightboxCaption) albumLightboxCaption.textContent = item.caption;
+  if (albumLightboxCounter) {
+    albumLightboxCounter.textContent = `${String(activeAlbumIndex + 1).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}`;
+  }
+}
+
+function handleAlbumLightboxKeys(event) {
+  if (!albumLightbox || albumLightbox.hidden) return;
+  if (event.key === "Escape") closeAlbumLightbox();
+  if (event.key === "ArrowLeft") moveAlbumLightbox(-1);
+  if (event.key === "ArrowRight") moveAlbumLightbox(1);
 }
 
 function initDiscordGate() {
