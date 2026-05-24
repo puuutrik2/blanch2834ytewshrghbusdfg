@@ -1118,11 +1118,11 @@ body.auth-locked .discord-entry {
 }
 
 .album-grid {
-  width: min(1180px, 100%);
+  width: min(1280px, calc(100% - 48px));
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
 }
 
 .album-slot {
@@ -1130,7 +1130,7 @@ body.auth-locked .discord-entry {
   min-width: 0;
   min-height: 0;
   margin: 0;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -1185,7 +1185,7 @@ body.auth-locked .discord-entry {
   color: var(--text);
   background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.88));
   font-family: "Oswald", sans-serif;
-  font-size: 1.28rem;
+  font-size: 1.5rem;
   font-weight: 700;
   text-transform: uppercase;
 }
