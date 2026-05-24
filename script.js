@@ -3,7 +3,7 @@ const toast = document.querySelector(".toast");
 const rainButton = document.querySelector(".rain-toggle");
 const rainVolumeSlider = document.querySelector(".rain-volume__slider");
 // Paste your Discord application Client ID here and add this page URL to OAuth2 Redirects.
-const DISCORD_CLIENT_ID = "";
+const DISCORD_CLIENT_ID = "1507442769839525898";
 const DISCORD_API_BASE = "https://discord.com/api/v10";
 const DISCORD_PROFILE_STORAGE_KEY = "blanchDiscordProfile";
 const DISCORD_STATE_STORAGE_KEY = "blanchDiscordState";
