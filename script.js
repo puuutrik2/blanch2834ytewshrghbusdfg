@@ -425,8 +425,23 @@ function renderDiscordProfile(profile) {
 function toggleDiscordProfileMenu(event) {
   event?.stopPropagation();
   if (!discordUser) {
+    const storedProfile = readStoredDiscordProfile();
+    if (storedProfile) {
+      discordUser = storedProfile;
+      renderDiscordProfile(storedProfile);
+    }
+  }
+
+  if (!discordUser && body.classList.contains("auth-locked")) {
     startDiscordOAuth();
     return;
+  }
+
+  if (!discordUser) {
+    discordUser = {
+      displayName: headerProfileName?.textContent?.trim() || "Discord",
+      avatarUrl: headerProfileAvatar?.getAttribute("src") || defaultDiscordAvatar,
+    };
   }
 
   const isOpen = discordProfileMenu && !discordProfileMenu.hidden;
