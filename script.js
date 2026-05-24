@@ -323,6 +323,7 @@ async function hydrateDiscordProfile() {
 
   const storedProfile = readStoredDiscordProfile();
   if (storedProfile) {
+    storeDiscordProfile(storedProfile);
     unlockDiscordGate(storedProfile);
     return;
   }
@@ -463,19 +464,29 @@ function getDiscordDefaultAvatarUrl(user) {
 }
 
 function storeDiscordProfile(profile) {
+  const serializedProfile = JSON.stringify(profile);
   try {
-    sessionStorage.setItem(DISCORD_PROFILE_STORAGE_KEY, JSON.stringify(profile));
+    localStorage.setItem(DISCORD_PROFILE_STORAGE_KEY, serializedProfile);
   } catch {
-    return;
+    try {
+      sessionStorage.setItem(DISCORD_PROFILE_STORAGE_KEY, serializedProfile);
+    } catch {
+      return;
+    }
   }
 }
 
 function readStoredDiscordProfile() {
   try {
-    const rawProfile = sessionStorage.getItem(DISCORD_PROFILE_STORAGE_KEY);
+    const rawProfile = localStorage.getItem(DISCORD_PROFILE_STORAGE_KEY) || sessionStorage.getItem(DISCORD_PROFILE_STORAGE_KEY);
     return rawProfile ? JSON.parse(rawProfile) : null;
   } catch {
-    return null;
+    try {
+      const rawProfile = sessionStorage.getItem(DISCORD_PROFILE_STORAGE_KEY);
+      return rawProfile ? JSON.parse(rawProfile) : null;
+    } catch {
+      return null;
+    }
   }
 }
 
@@ -552,9 +563,14 @@ function closeDiscordProfileMenuOnEscape(event) {
 function logoutDiscordProfile(event) {
   event?.stopPropagation();
   try {
+    localStorage.removeItem(DISCORD_PROFILE_STORAGE_KEY);
     sessionStorage.removeItem(DISCORD_PROFILE_STORAGE_KEY);
   } catch {
-    // The visible session should still be reset even if storage is blocked.
+    try {
+      sessionStorage.removeItem(DISCORD_PROFILE_STORAGE_KEY);
+    } catch {
+      // The visible session should still be reset even if storage is blocked.
+    }
   }
   closeDiscordProfileMenu();
   resetDiscordProfile();
