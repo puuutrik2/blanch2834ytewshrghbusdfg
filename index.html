@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="BLANCH - премиальный сайт семьи в GTA 5 RP с темной crime aesthetic, неоном и фотоальбомом."
+    />
+    <title>BLANCH Family | GTA 5 RP</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&family=Russo+One&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="vendor/lucide.min.js" defer></script>
+    <script src="vendor/three.min.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body class="auth-locked">
+    <div class="loader" aria-label="Загрузка сайта">
+      <div class="loader__mark">BLANCH</div>
+      <div class="loader__line"></div>
+      <span>Establishing secure line</span>
+    </div>
+
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <div class="site-noise" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="rain-layer" aria-hidden="true"></div>
+
+    <section class="discord-entry" id="discordEntry" aria-label="Вход через Discord">
+      <div class="discord-entry__aura" aria-hidden="true"></div>
+      <div class="discord-entry__panel" data-magnetic>
+        <span class="discord-entry__tag">BLANCH PRIVATE ACCESS</span>
+        <strong class="discord-entry__logo">BLANCH</strong>
+        <button class="discord-entry__button" id="discordEntryButton" type="button">
+          <i data-lucide="log-in"></i>
+          <span>Войти через Discord</span>
+        </button>
+      </div>
+    </section>
+
+    <header class="site-header" data-blur>
+      <a class="brand" href="#home" aria-label="BLANCH home">
+        <span class="brand__sigil">B</span>
+        <span>BLANCH</span>
+      </a>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#about">Семья</a>
+        <a href="#gallery">Галерея</a>
+        <a href="#album">Альбом</a>
+        <a href="#members">Состав</a>
+        <a href="#criteria">Вступление</a>
+      </nav>
+      <div class="header-actions">
+        <div class="rain-control">
+          <button class="icon-button rain-toggle" type="button" aria-label="Включить дождь" title="Дождь">
+            <i data-lucide="cloud-rain"></i>
+          </button>
+          <label class="rain-volume">
+            <span class="sr-only">Громкость дождя</span>
+            <input class="rain-volume__slider" type="range" min="0" max="100" value="55" aria-label="Громкость дождя" />
+          </label>
+        </div>
+        <button class="header-profile" id="discordProfileButton" type="button" aria-label="Войти через Discord">
+          <img class="header-profile__avatar" src="assets/member-ghost.png" alt="Discord avatar" />
+          <span class="header-profile__name">Войти через Discord</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home" data-magnetic>
+        <div class="hero__media" aria-hidden="true"></div>
+        <div class="hero__shade" aria-hidden="true"></div>
+        <div class="hero__grid" aria-hidden="true"></div>
+        <canvas class="hero__three" id="heroThree" aria-hidden="true"></canvas>
+        <div class="hero__content">
+          <p class="eyebrow reveal">Los Santos private family</p>
+          <h1 class="hero__title reveal">BLANCH</h1>
+          <p class="hero__slogan reveal">Не каждый достоин носить имя BLANCH</p>
+          <div class="hero__actions reveal">
+            <a class="secondary-button" href="#gallery">
+              <span>Смотреть галерею</span>
+            </a>
+          </div>
+        </div>
+        <div class="hero__status reveal" aria-label="Краткая сводка семьи">
+          <div>
+            <span>Статус</span>
+            <strong>Набор открыт</strong>
+          </div>
+          <div>
+            <span>Связь</span>
+            <strong>Discord</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="section about" id="about">
+        <div class="section__head reveal">
+          <p class="eyebrow">О семье</p>
+          <h2>Холодный расчет. Чистый стиль. Полный контроль.</h2>
+          <p>
+            BLANCH - закрытая RP-семья с дорогой эстетикой, строгой иерархией и уважением к людям,
+            которые умеют держать слово. Мы играем атмосферно, собранно и без лишнего шума.
+          </p>
+        </div>
+
+        <div class="code-grid">
+          <article class="code-card reveal">
+            <span>01</span>
+            <h3>Лояльность</h3>
+            <p>Мы ценим тех, кто не исчезает после первой трудной ситуации и держит общий темп семьи.</p>
+          </article>
+          <article class="code-card reveal">
+            <span>02</span>
+            <h3>Репутация</h3>
+            <p>Каждое действие в городе влияет на имя BLANCH, поэтому стиль важен не меньше результата.</p>
+          </article>
+          <article class="code-card reveal">
+            <span>03</span>
+            <h3>Иерархия</h3>
+            <p>Роли, задачи и ответственность распределены ясно: порядок держит семью сильной.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section gallery" id="gallery">
+        <div class="section__head reveal">
+          <p class="eyebrow">Галерея</p>
+          <h2>Атмосфера ночного города</h2>
+        </div>
+
+        <div class="gallery-grid">
+          <figure class="gallery-card reveal">
+            <img src="assets/gallery-convoy.png" alt="Черный конвой BLANCH в ночном городе" loading="lazy" />
+            <figcaption>
+              <span>01</span>
+              <strong>Night Convoy</strong>
+            </figcaption>
+          </figure>
+          <figure class="gallery-card reveal">
+            <img src="assets/gallery-garage.png" alt="Темный гараж с премиальной машиной" loading="lazy" />
+            <figcaption>
+              <span>02</span>
+              <strong>Private Garage</strong>
+            </figcaption>
+          </figure>
+          <figure class="gallery-card reveal">
+            <img src="assets/gallery-penthouse.png" alt="Встреча семьи BLANCH на фоне города" loading="lazy" />
+            <figcaption>
+              <span>03</span>
+              <strong>Penthouse Room</strong>
+            </figcaption>
+          </figure>
+          <figure class="gallery-card reveal">
+            <img src="assets/gallery-redline.png" alt="Машина на красной неоновой трассе" loading="lazy" />
+            <figcaption>
+              <span>04</span>
+              <strong>Redline</strong>
+            </figcaption>
+          </figure>
+          <figure class="gallery-card reveal">
+            <img src="assets/gallery-meeting.png" alt="Силуэты участников на закрытой встрече" loading="lazy" />
+            <figcaption>
+              <span>05</span>
+              <strong>Closed Meeting</strong>
+            </figcaption>
+          </figure>
+          <figure class="gallery-card reveal">
+            <img src="assets/gallery-city.png" alt="Темный городской пейзаж с белым неоном" loading="lazy" />
+            <figcaption>
+              <span>06</span>
+              <strong>City Signal</strong>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section album" id="album">
+        <div class="section__head reveal">
+          <p class="eyebrow">Фотоальбом</p>
+          <h2>Архив BLANCH</h2>
+        </div>
+
+        <div class="album-grid">
+          <figure class="album-slot reveal">
+            <img src="assets/gallery-convoy.png" alt="Фото 01 BLANCH" loading="lazy" />
+            <figcaption>Фото 01</figcaption>
+          </figure>
+          <figure class="album-slot reveal">
+            <img src="assets/gallery-garage.png" alt="Фото 02 BLANCH" loading="lazy" />
+            <figcaption>Фото 02</figcaption>
+          </figure>
+          <figure class="album-slot reveal">
+            <img src="assets/gallery-penthouse.png" alt="Фото 03 BLANCH" loading="lazy" />
+            <figcaption>Фото 03</figcaption>
+          </figure>
+          <figure class="album-slot reveal">
+            <img src="assets/gallery-redline.png" alt="Фото 04 BLANCH" loading="lazy" />
+            <figcaption>Фото 04</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section members" id="members">
+        <div class="section__head reveal">
+          <p class="eyebrow">Состав</p>
+          <h2>Лица, за которыми стоит имя</h2>
+        </div>
+
+        <div class="members-grid">
+          <article class="member-card reveal">
+            <img src="assets/member-vince.png" alt="Vince BLANCH" loading="lazy" />
+            <div class="member-card__meta">
+              <span>Boss</span>
+              <h3>Vince BLANCH</h3>
+              <p>Глава семьи</p>
+            </div>
+          </article>
+
+          <article class="member-card reveal">
+            <img src="assets/member-nero.png" alt="Nero BLANCH" loading="lazy" />
+            <div class="member-card__meta">
+              <span>Deputy</span>
+              <h3>Nero BLANCH</h3>
+              <p>Правая рука</p>
+            </div>
+          </article>
+
+          <article class="member-card reveal">
+            <img src="assets/member-ghost.png" alt="Ghost BLANCH" loading="lazy" />
+            <div class="member-card__meta">
+              <span>Security</span>
+              <h3>Ghost BLANCH</h3>
+              <p>Куратор безопасности</p>
+            </div>
+          </article>
+
+          <article class="member-card reveal">
+            <img src="assets/member-mira.png" alt="Mira BLANCH" loading="lazy" />
+            <div class="member-card__meta">
+              <span>Diplomat</span>
+              <h3>Mira BLANCH</h3>
+              <p>Дипломат и рекрутер</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section criteria" id="criteria">
+        <div class="section__head reveal">
+          <p class="eyebrow">Вступление</p>
+          <h2>Критерии для вступления</h2>
+          <p>В BLANCH проходят не по случайности. Нам важны стабильность, адекватность и умение играть в RP.</p>
+        </div>
+
+        <div class="criteria-grid">
+          <article class="criteria-card reveal">
+            <i data-lucide="badge-check"></i>
+            <h3>15+</h3>
+            <p>Есть исключения для сильных кандидатов с хорошей дисциплиной.</p>
+          </article>
+          <article class="criteria-card reveal">
+            <i data-lucide="star"></i>
+            <h3>5+ уровень</h3>
+            <p>Базовый опыт сервера и понимание игровых процессов.</p>
+          </article>
+          <article class="criteria-card reveal">
+            <i data-lucide="shield-check"></i>
+            <h3>Без банов</h3>
+            <p>Чистая история важна для доверия внутри состава.</p>
+          </article>
+          <article class="criteria-card reveal">
+            <i data-lucide="message-circle-check"></i>
+            <h3>Адекватность</h3>
+            <p>Спокойное общение, уважение и умение слушать старших.</p>
+          </article>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <span>BLANCH Family</span>
+      <span>GTA 5 RP private aesthetic</span>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
