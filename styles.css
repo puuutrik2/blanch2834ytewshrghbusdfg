@@ -1268,6 +1268,16 @@ body.auth-locked .discord-entry {
   perspective: 1400px;
 }
 
+@media (min-width: 1081px) {
+  .members-grid .member-card:nth-last-child(2) {
+    grid-column: 2;
+  }
+
+  .members-grid .member-card:last-child {
+    grid-column: 3;
+  }
+}
+
 .member-card {
   position: relative;
   min-width: 0;
