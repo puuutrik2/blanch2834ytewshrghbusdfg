@@ -24,6 +24,10 @@ const defaultDiscordAvatar = headerProfileAvatar?.getAttribute("src") || "assets
 let discordUser = null;
 let activeAlbumIndex = 0;
 
+if ("scrollRestoration" in window.history) {
+  window.history.scrollRestoration = "manual";
+}
+
 window.addEventListener("load", () => {
   window.setTimeout(() => body.classList.add("is-loaded"), 650);
 });
@@ -143,9 +147,10 @@ if (window.location.hash) {
 
 function scrollToSection(target, behavior = "smooth") {
   const header = document.querySelector(".site-header");
+  const scrollTarget = target.id === "members" ? target.querySelector(".members-grid") || target : target;
   const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
-  const offset = headerBottom + 34;
-  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+  const offset = headerBottom + (target.id === "members" ? 48 : 34);
+  const top = scrollTarget.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top: Math.max(0, top), behavior });
 }
 
