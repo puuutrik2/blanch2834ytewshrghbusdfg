@@ -1256,6 +1256,7 @@ body.auth-locked .discord-entry {
 
 .members {
   padding-top: 184px;
+  scroll-margin-top: 190px;
   background:
     radial-gradient(circle at 80% 20%, rgba(238, 246, 255, 0.06), transparent 28rem),
     linear-gradient(180deg, #050608 0%, #030304 100%);
@@ -1264,6 +1265,7 @@ body.auth-locked .discord-entry {
 .members-grid {
   width: min(1180px, 100%);
   margin: 0 auto;
+  padding-top: 92px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: start;
@@ -1813,6 +1815,10 @@ body.auth-locked .discord-entry {
   .criteria-grid,
   .form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .members-grid {
+    padding-top: 54px;
   }
 
   .album-slot {
