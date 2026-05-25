@@ -116,7 +116,8 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     const target = document.querySelector(link.getAttribute("href"));
     if (!target) return;
     event.preventDefault();
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollToSection(target, "smooth");
+    window.history.pushState(null, "", link.getAttribute("href"));
   });
 });
 
@@ -125,9 +126,27 @@ const jumpTarget = initialParams.get("jump");
 if (jumpTarget) {
   window.addEventListener("load", () => {
     window.setTimeout(() => {
-      document.querySelector(`#${CSS.escape(jumpTarget)}`)?.scrollIntoView({ behavior: "auto", block: "start" });
+      const target = document.querySelector(`#${CSS.escape(jumpTarget)}`);
+      if (target) scrollToSection(target, "auto");
     }, 200);
   });
+}
+
+if (window.location.hash) {
+  window.addEventListener("load", () => {
+    window.setTimeout(() => {
+      const target = document.querySelector(window.location.hash);
+      if (target) scrollToSection(target, "auto");
+    }, 250);
+  });
+}
+
+function scrollToSection(target, behavior = "smooth") {
+  const header = document.querySelector(".site-header");
+  const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
+  const offset = headerBottom + 34;
+  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top: Math.max(0, top), behavior });
 }
 
 const cursorDot = document.querySelector(".cursor-dot");
